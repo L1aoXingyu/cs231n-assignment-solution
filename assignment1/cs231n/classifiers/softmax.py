@@ -70,15 +70,15 @@ def softmax_loss_vectorized(W, X, y, reg):
     # here, it is easy to run into numeric instability. Don't forget the        #
     # regularization!                                                           #
     #############################################################################
-    scores = np.dot(X, W)
+    scores = np.dot(X, W)  # 计算得分
     scores -= np.max(scores, axis=1, keepdims=True)  # 数值稳定性
-    scores = np.exp(scores)
-    scores /= np.sum(scores, axis=1, keepdims=True)  # softmax
-    ds = np.copy(scores)
-    ds[np.arange(X.shape[0]), y] -= 1
-    dW = np.dot(X.T, ds)
-    loss = scores[np.arange(X.shape[0]), y]
-    loss = -np.log(loss).sum()
+    scores = np.exp(scores)  # 取指数
+    scores /= np.sum(scores, axis=1, keepdims=True)  # 计算softmax
+    ds = np.copy(scores)  # 初始化loss对scores的梯度
+    ds[np.arange(X.shape[0]), y] -= 1  # 求出scores的梯度
+    dW = np.dot(X.T, ds)  # 求出w的梯度
+    loss = scores[np.arange(X.shape[0]), y] # 计算loss
+    loss = -np.log(loss).sum()  #求交叉熵
     loss /= X.shape[0]
     dW /= X.shape[0]
     loss += reg * np.sum(W * W)
