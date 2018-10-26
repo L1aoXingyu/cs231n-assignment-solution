@@ -226,10 +226,8 @@ class TwoLayerNet(object):
         ###########################################################################
         # TODO: Implement this function; it should be VERY simple!                #
         ###########################################################################
-        s1 = np.dot(X, self.params['W1']) + self.params['b1']
-        s1 = s1 * (s1 > 0)
-        s2 = np.dot(s1, self.params['W2']) + self.params['b2']
-        y_pred = np.argmax(s2, axis=1)
+        scores = self.loss(X)
+        y_pred = np.argmax(scores, axis=1)
         ###########################################################################
         #                              END OF YOUR CODE                           #
         ###########################################################################
