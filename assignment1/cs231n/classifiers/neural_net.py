@@ -113,13 +113,14 @@ class TwoLayerNet(object):
         #############################################################################
         ds2 = np.copy(scores)  # 计算ds
         ds2[np.arange(X.shape[0]), y] -= 1
-        grads['W2'] = np.dot(s1_act.T, ds2) / X.shape[0] + 2 * reg * W2
-        grads['b2'] = np.sum(ds2, axis=0) / X.shape[0]
+        ds2 = ds2 / X.shape[0]
+        grads['W2'] = np.dot(s1_act.T, ds2) + 2 * reg * W2
+        grads['b2'] = np.sum(ds2, axis=0)
 
         ds1 = np.dot(ds2, W2.T)
         ds1 = (s1 > 0) * ds1
-        grads['W1'] = np.dot(X.T, ds1) / X.shape[0] + 2 * reg * W1
-        grads['b1'] = np.sum(ds1, axis=0) / X.shape[0]
+        grads['W1'] = np.dot(X.T, ds1) + 2 * reg * W1
+        grads['b1'] = np.sum(ds1, axis=0)
         #############################################################################
         #                              END OF YOUR CODE                             #
         #############################################################################

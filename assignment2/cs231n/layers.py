@@ -361,7 +361,7 @@ def layernorm_backward(dout, cache):
     # still apply!                                                            #
     ###########################################################################
     x_hat, gamma, mu, inv_sigma = cache
-    d = x_hat.shape[1]
+    d = x_hat.shape[1]  # (N, D)
     dgamma = np.sum(dout * x_hat, axis=0)
     dbeta = np.sum(dout, axis=0)
     dxhat = (dout * gamma).T
