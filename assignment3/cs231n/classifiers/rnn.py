@@ -229,6 +229,7 @@ class CaptioningRNN(object):
         ###########################################################################
         h, _ = affine_forward(features, W_proj, b_proj)
         inputs, _ = word_embedding_forward(self._start, W_embed)
+        # inputs = np.tile(inputs, (2, 1))
         c = np.zeros_like(h)
         for i in range(max_length):
             if self.cell_type == 'rnn':
@@ -239,7 +240,7 @@ class CaptioningRNN(object):
             output_idx = np.argmax(output, axis=2)
             for j in range(output_idx.shape[0]):
                 captions[j][i] = output_idx[j]
-            inputs, _ = word_embedding_forward(output_idx[0], W_embed)
+            inputs, _ = word_embedding_forward(output_idx[:, 0], W_embed)
             h = next_h
             if self.cell_type == 'lstm':
                 c = next_c

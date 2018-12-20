@@ -1,6 +1,9 @@
 *.swp
 *.pyc
 .env/*
+__pycache__
+.DS_Store
+datasets
 
 # gitignore the built release.
 assignment3/*
